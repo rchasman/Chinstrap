@@ -1,3 +1,4 @@
+*.DS_Store
 pom.xml
 *jar
 /lib/
@@ -14,5 +15,7 @@ conrad.log
 /.lein-plugins/
 target/*
 *.swp
+*.swo
 *.un~
 /target/
+*.swn

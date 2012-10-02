@@ -3,20 +3,10 @@
   (:require [clojure-commons.props :as cc-props]
             [clojure.tools.logging :as log]))
 
-(defn prop-file
-  "The name of the properties file."
-  []
-  "zkhosts.properties")
-
 (defn zk-props
-  "The properties loaded from the properties file."
+  "Connects to zookeeper and loads properties."
   []
-  (cc-props/parse-properties (prop-file)))
-
-(defn zk-url
-  "The URL used to connect to zookeeper."
-  []
-  (get (zk-props) "zookeeper"))
+  (get (cc-props/parse-properties "zkhosts.properties") "zookeeper"))
 
 (def props
   "The properites that have been loaded from Zookeeper."
@@ -27,7 +17,7 @@
   (ref []))
 
 (def configuration-is-valid
-  "True if the configuraiton is valid."
+  "True if the configuration is valid."
   (atom true))
 
 (defn- record-missing-prop
@@ -77,7 +67,8 @@
   "Registers a property in the list of required properties."
   [prop]
   (dosync (alter required-props conj prop)))
-;postgres connection properties
+
+;'Metadactyl' Postgres connection properties
 (required
   (defprop postgresdb-driver
     "The database driver."
@@ -165,7 +156,7 @@
     (get-str "chinstrap.mongodb.bucket")))
 
 (required
-  (defprop mongodb-listen-port
+  (defprop listen-port
     "The port to listen to for incoming connections."
     (get-int "chinstrap.app.listen-port")))
 
